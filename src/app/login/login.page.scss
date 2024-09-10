@@ -1,0 +1,53 @@
+.logo-img{
+    width: 60%;
+    margin-left: 20%;
+    }
+
+    .custom-loading {
+        animation: fadeIn 0.5s;
+      }
+      
+      .custom-toast {
+        animation: slideIn 0.5s;
+      }
+      
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      
+      @keyframes slideIn {
+        from {
+          transform: translateY(100%);
+        }
+        to {
+          transform: translateY(0);
+        }
+      }
+      
+      .error-text {
+        color: red;
+        font-size: 12px;
+      }
+      
+      .animated-input {
+        transition: transform 0.3s ease-in-out;
+      }
+      
+      .animated-input:focus-within {
+        transform: scale(1.05);
+      }
+      
+      .animated-button {
+        transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+      }
+      
+      .animated-button:hover {
+        background-color: #3880ff;
+        transform: translateY(-3px);
+      }
+      

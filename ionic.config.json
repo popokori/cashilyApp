@@ -1,0 +1,7 @@
+{
+  "name": "cashilyApp",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

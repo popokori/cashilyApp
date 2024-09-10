@@ -1,0 +1,89 @@
+ion-card {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+ion-card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+ion-label {
+    margin-top: 10px;
+    font-size: 10px;
+    color: var(--ion-color-primary);
+}
+.labeltitre{
+    color: aliceblue;
+}
+.labeltitreMenu{
+    margin: 20px;
+    color: aliceblue;
+}
+ion-avatar img {
+    border-radius: 50%;
+    border: 2px solid #FFD700;
+  }
+  
+  ion-label h2 {
+    margin-left: 10px;
+    color: #000;
+  }
+ion-segment-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+ion-segment-button ion-icon {
+    margin-bottom: 2px;
+}
+
+.header-row {
+    background-color:#3098cc;
+   
+    text-align: center;
+    padding: 3px 0;
+}
+.header-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.icon-circleMenu {
+    background-color: white;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    margin: 5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 3px;
+}
+.icon-circle {
+    background-color: white;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 3px;
+}
+@media (min-width: 576px) {
+  .icon-circle {
+      width: 80px;
+      height: 80px;
+  }
+}
+@media (min-width: 768px) {
+  .icon-circle {
+      width: 100px;
+      height: 100px;
+  }
+}

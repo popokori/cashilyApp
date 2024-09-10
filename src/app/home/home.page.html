@@ -1,0 +1,118 @@
+
+<ion-menu contentId="main-content">
+ 
+    <ion-header>
+      <ion-toolbar color="primary">
+        <ion-grid class="header-row">
+          <ion-row >
+            <ion-col   class="header-col">
+              <div class="icon-circleMenu" (click)="msg()">
+                <img  src="assets/icon/icon-user.svg" style="width: 80px; height: 80px;"  />
+               
+            </div>
+              <ion-label class="labeltitreMenu"><h2>{{nomUser}}</h2></ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-toolbar>
+    </ion-header>
+    
+    <ion-content style="margin-top: 20px;">
+      <ion-list>
+      
+        <ion-item>
+          <ion-icon name="language" slot="start"></ion-icon>
+          <ion-label>Langue</ion-label>
+        </ion-item>
+        
+        <ion-item>
+          <ion-icon name="logo-facebook" slot="start"></ion-icon>
+          <ion-label>Lien compte Facebook</ion-label>
+        </ion-item>
+        
+        <ion-item>
+          <ion-icon name="lock-closed" slot="start"></ion-icon>
+          <ion-label>Changer le code PIN</ion-label>
+        </ion-item>
+        
+        <ion-item>
+          <ion-icon name="log-out" slot="start"></ion-icon>
+          <ion-label>Déconnexion</ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+ 
+</ion-menu>
+<div class="ion-page" id="main-content">
+  <ion-header [translucent]="true">
+    <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>Tableau de bord</ion-title>
+    </ion-toolbar>
+    <ion-toolbar color="primary">
+    <ion-grid class="header-row">
+      <ion-row >
+        <ion-col size="4"  class="header-col">
+          <div class="icon-circle" >
+            <img *ngIf="iconUrl1" [src]="iconUrl1" style="width: 32px; height: 32px;"  />
+           
+        </div>
+          <ion-label class="labeltitre">Paiements</ion-label>
+        </ion-col>
+        <ion-col size="4"  class="header-col">
+          <div class="icon-circle" (click)="msg()" >
+            <img *ngIf="iconUrl2" [src]="iconUrl2" style="width: 32px; height: 32px;"  />
+           
+        </div>
+          <ion-label class="labeltitre">{{ label2 }}</ion-label>
+        </ion-col>
+        <ion-col size="4" class="header-col">
+          <div class="icon-circle" >
+            <img *ngIf="iconUrl3" [src]="iconUrl3" style="width: 32px; height: 32px;"  />
+           
+        </div>
+          <ion-label class="labeltitre">{{ label3 }}</ion-label>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+  </ion-header>
+  <ion-content [fullscreen]="true" class="ion-padding" style="background-color: var(--ion-background-color);">
+    <ion-grid>
+      <ion-row>
+        <ion-col sizeSm="3" *ngFor="let item of items">
+          <ion-card>
+            <ion-card-content class="ion-text-center">
+              <img *ngIf="item.iconUrl" [src]="item.iconUrl" style="width: 32px; height: 32px;" />
+           
+              <ion-label>{{ item.label }}</ion-label>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-content>
+  
+    <ion-tabs>
+      <ion-tab-bar slot="bottom">
+        <ion-tab-button value="home" tab="home" (click)="onhome()">
+          <ion-icon name="home"></ion-icon>
+          <ion-label>Accueil</ion-label>
+        </ion-tab-button>
+        <ion-tab-button value="favorites">
+          <ion-icon name="star"></ion-icon>
+          <ion-label>Favoris</ion-label>
+        </ion-tab-button>
+        <ion-tab-button value="notifications">
+          <ion-icon name="notifications"></ion-icon>
+          <ion-label>Notifications</ion-label>
+        </ion-tab-button>
+        <ion-tab-button value="help">
+          <ion-icon name="help-circle"></ion-icon>
+          <ion-label>Aide </ion-label> </ion-tab-button>
+      </ion-tab-bar>
+    </ion-tabs>
+
+  </div>

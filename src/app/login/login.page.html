@@ -1,0 +1,29 @@
+<ion-content class="ion-padding">
+  <div class="login-logo">
+    <img class="logo-img" src="assets/img/logo.png" alt="Cashily Logo">
+  </div>
+  <form (submit)="onLogin()">
+    <ion-item class="animated-input">
+      <ion-label position="floating">Username or Phone Number</ion-label>
+      <ion-input type="text" [(ngModel)]="username" name="username" required></ion-input>
+    </ion-item>
+    <ion-text *ngIf="cliquedl">
+      <p class="error-text">Le numero de telephone doit être de 4 chiffres.</p>
+    </ion-text>
+    <ion-item class="animated-input">
+      <ion-label position="floating">PIN</ion-label>
+      <ion-input type="password" [(ngModel)]="password" name="password" required pattern="\d{4}" maxlength="4"></ion-input>
+    </ion-item>
+    <ion-text *ngIf="cliquedp">
+      <p class="error-text">Le PIN doit être de 4 chiffres.</p>
+    </ion-text>
+    <ion-button expand="full" color="primary" type="submit" class="animated-button">Login</ion-button>
+  </form>
+  <ion-text>
+    <a href="#">Forgot PIN?</a>
+  </ion-text>
+  
+  <ion-text (click)=" goToRegister()">
+    <a>New User? Register Now</a>
+  </ion-text>
+</ion-content>

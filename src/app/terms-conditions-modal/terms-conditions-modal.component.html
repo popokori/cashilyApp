@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Termes et Conditions</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal(false)">Refuser</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content (ionScroll)="onScroll($event)">
+  <div *ngIf="!pdfLoadError">
+    <pdf-viewer
+      [src]="pdfSrc"
+      [render-text]="true"
+      (after-load-complete)="onPdfLoad()"
+      (error)="onPdfError($event)"
+      style="display: block;"
+    ></pdf-viewer>
+  </div>
+  <div *ngIf="pdfLoadError">
+    <p>Erreur de chargement du document PDF. Veuillez réessayer plus tard.</p>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button [disabled]="!scrollComplete || !pdfLoaded" (click)="closeModal(true)">Accepter</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

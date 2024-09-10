@@ -1,0 +1,298 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button default-href="/login"></ion-back-button>
+    </ion-buttons>
+   
+  
+   
+    <ion-title class="ion-text-center">Register</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <!-- Ajouter le logo en haut de la page -->
+  <div class="login-logo">
+    <img class="logo-img" src="assets/img/logo.png" alt="Cashily Logo">
+  </div>
+
+  <form *ngIf="!showSecretCodeInput && !showFullRegisterForm" [formGroup]="registerForm" (ngSubmit)="onSubmit()" [@formAnimation]>
+    <ion-item>
+      <ion-label position="floating">Numéro de téléphone</ion-label>
+      <ion-input formControlName="numTel" type="number"></ion-input>
+    </ion-item>
+    <ion-note *ngIf="registerForm.get('numTel')?.hasError('required') && registerForm.get('numTel')?.touched" color="danger">
+      Le numéro de téléphone est requis.
+    </ion-note>
+    <ion-note *ngIf="registerForm.get('numTel')?.hasError('pattern') && registerForm.get('numTel')?.touched" color="danger">
+      Le numéro de téléphone est invalide.
+    </ion-note>
+
+    <ion-item>
+      <ion-label position="floating">NNI</ion-label>
+      <ion-input formControlName="nni" type="number"></ion-input>
+    </ion-item>
+    <ion-note *ngIf="registerForm.get('nni')?.hasError('required') && registerForm.get('nni')?.touched" color="danger">
+      Le NNI est requis.
+    </ion-note>
+
+    <ion-button expand="full" type="submit" [disabled]="registerForm.invalid">Vérifier</ion-button>
+  </form>
+
+  <div *ngIf="showSecretCodeInput" [@formAnimation]>
+    <form [formGroup]="secretCodeForm" (ngSubmit)="onVerifySecretCode()">
+      <ion-item>
+        <ion-label position="floating">Code secret</ion-label>
+        <ion-input formControlName="secretCode" type="text"></ion-input>
+      </ion-item>
+      <ion-note *ngIf="secretCodeForm.get('secretCode')?.hasError('required') && secretCodeForm.get('secretCode')?.touched" color="danger">
+        Le code secret est requis.
+      </ion-note>
+
+      <ion-item>
+        <ion-label>Temps restant: {{ timeLeft }} secondes</ion-label>
+      </ion-item>
+
+      <ion-button expand="full" type="submit" [disabled]="secretCodeForm.invalid">Vérifier le code</ion-button>
+    </form>
+  </div>
+
+  <form *ngIf="showFullRegisterForm" [formGroup]="fullRegisterForm" (ngSubmit)="onFullRegister()" [@formAnimation]>
+  <div *ngIf="pass" >
+    <ion-item >
+      <ion-label position="floating">Numéro de téléphone</ion-label>
+      <ion-input formControlName="username" type="text" readonly></ion-input>
+    </ion-item>
+    <ion-note *ngIf="fullRegisterForm.get('username')?.hasError('required') && fullRegisterForm.get('username')?.touched" color="danger">
+      Le nom d'utilisateur est requis.
+    </ion-note>
+  
+    <ion-item >
+      <ion-label position="floating">Mot de passe</ion-label>
+      <ion-input formControlName="password" type="password"></ion-input>
+    </ion-item>
+    <ion-note *ngIf="fullRegisterForm.get('password')?.hasError('required') && fullRegisterForm.get('password')?.touched" color="danger">
+      Le mot de passe est requis.
+    </ion-note>
+  
+    <ion-item >
+      <ion-label position="floating">Confirmer le mot de passe</ion-label>
+      <ion-input formControlName="confirmPassword" type="password"></ion-input>
+    </ion-item>
+    <ion-note *ngIf="fullRegisterForm.get('confirmPassword')?.hasError('required') && fullRegisterForm.get('confirmPassword')?.touched" color="danger">
+      La confirmation du mot de passe est requise.
+    </ion-note>
+    <ion-note *ngIf="fullRegisterForm.get('confirmPassword')?.hasError('mustMatch') && fullRegisterForm.get('confirmPassword')?.touched" color="danger">
+      Les mots de passe ne correspondent pas.
+    </ion-note>
+
+    <ion-button expand="full" [disabled]="isvi" type="button" (click)="Next()" >Suivant</ion-button>
+   
+  </div>
+    <div *ngIf="showAdditionalFields">
+      <ion-item *ngIf=false>
+        <ion-label position="floating">Device ID</ion-label>
+        <ion-input formControlName="deviceId" type="text"></ion-input>
+      </ion-item>
+      <ion-note *ngIf=false color="danger">
+        Le Device ID est requis.
+      </ion-note>
+    
+      <ion-item>
+        <ion-label position="floating">Date de naissance</ion-label>
+        <ion-input formControlName="dateNaissance" type="text" readonly></ion-input>
+      </ion-item>
+      <ion-note *ngIf="fullRegisterForm.get('dateNaissance')?.hasError('required') && fullRegisterForm.get('dateNaissance')?.touched" color="danger">
+        La date de naissance est requise.
+      </ion-note>
+    
+      <ion-item *ngIf=false>
+        <ion-label position="floating">Image</ion-label>
+        <ion-input formControlName="img" type="text"></ion-input>
+      </ion-item>
+      <ion-note *ngIf="fullRegisterForm.get('img')?.hasError('required') && fullRegisterForm.get('img')?.touched" color="danger">
+        L'image est requise.
+      </ion-note>
+    
+      <ion-item *ngIf=false>
+        <ion-label position="floating">Lieu de naissance (Ar)</ion-label>
+        <ion-input formControlName="lieuNaissanceAr" type="text"></ion-input>
+      </ion-item>
+      <ion-note *ngIf="fullRegisterForm.get('lieuNaissanceAr')?.hasError('required') && fullRegisterForm.get('lieuNaissanceAr')?.touched" color="danger">
+        Le lieu de naissance (Ar) est requis.
+      </ion-note>
+    
+      <ion-item>
+        <ion-label position="floating">Lieu de naissance (Fr)</ion-label>
+        <ion-input formControlName="lieuNaissanceFr" type="text" readonly></ion-input>
+      </ion-item>
+      <ion-note *ngIf="fullRegisterForm.get('lieuNaissanceFr')?.hasError('required') && fullRegisterForm.get('lieuNaissanceFr')?.touched" color="danger">
+        Le lieu de naissance (Fr) est requis.
+      </ion-note>
+    
+      <ion-item *ngIf=false>
+        <ion-label position="floating">Message d'erreur</ion-label>
+        <ion-input formControlName="messageError" type="text"></ion-input>
+      </ion-item>
+      <ion-note *ngIf="fullRegisterForm.get('messageError')?.hasError('required') && fullRegisterForm.get('messageError')?.touched" color="danger">
+        Le message d'erreur est requis.
+      </ion-note>
+    
+      <ion-item *ngIf=false>
+        <ion-label position="floating">Nationalité ISO</ion-label>
+        <ion-input formControlName="nationaliteIso" type="text"></ion-input>
+      </ion-item>
+      <ion-note *ngIf="fullRegisterForm.get('nationaliteIso')?.hasError('required') && fullRegisterForm.get('nationaliteIso')?.touched" color="danger">
+        La nationalité ISO est requise.
+      </ion-note>
+    
+      <ion-item *ngIf=false>
+        <ion-label position="floating">Nom de famille (Ar)</ion-label>
+        <ion-input formControlName="nomFamilleAr" type="text"></ion-input>
+      </ion-item>
+      <ion-note *ngIf="fullRegisterForm.get('nomFamilleAr')?.hasError('required') && fullRegisterForm.get('nomFamilleAr')?.touched" color="danger">
+        Le nom de famille (Ar) est requis.
+      </ion-note>
+    
+      <ion-item>
+        <ion-label position="floating">Nom de famille (Fr)</ion-label>
+        <ion-input formControlName="nomFamilleFr" type="text" readonly></ion-input>
+      </ion-item>
+      <ion-note *ngIf="fullRegisterForm.get('nomFamilleFr')?.hasError('required') && fullRegisterForm.get('nomFamilleFr')?.touched" color="danger">
+        Le nom de famille (Fr) est requis.
+      </ion-note>
+    
+      <ion-item *ngIf=false>
+        <ion-label position="floating">Prénom (Ar)</ion-label>
+        <ion-input formControlName="prenomAr" type="text"></ion-input>
+      </ion-item>
+      <ion-note *ngIf="fullRegisterForm.get('prenomAr')?.hasError('required') && fullRegisterForm.get('prenomAr')?.touched" color="danger">
+        Le prénom (Ar) est requis.
+      </ion-note>
+    
+      <ion-item>
+        <ion-label position="floating">Prénom (Fr)</ion-label>
+        <ion-input formControlName="prenomFr" type="text" readonly></ion-input>
+      </ion-item>
+      <ion-note *ngIf="fullRegisterForm.get('prenomFr')?.hasError('required') && fullRegisterForm.get('prenomFr')?.touched" color="danger">
+        Le prénom (Fr) est requis.
+      </ion-note>
+    
+      <ion-item *ngIf=false>
+        <ion-label position="floating">Prénom du père (Ar)</ion-label>
+        <ion-input formControlName="prenomPereAr" type="text"></ion-input>
+      </ion-item>
+      <ion-note *ngIf="fullRegisterForm.get('prenomPereAr')?.hasError('required') && fullRegisterForm.get('prenomPereAr')?.touched" color="danger">
+        Le prénom du père (Ar) est requis.
+      </ion-note>
+    
+      <ion-item>
+        <ion-label position="floating">Prénom du père (Fr)</ion-label>
+        <ion-input formControlName="prenomPereFr" type="text" readonly></ion-input>
+      </ion-item>
+      <ion-note *ngIf="fullRegisterForm.get('prenomPereFr')?.hasError('required') && fullRegisterForm.get('prenomPereFr')?.touched" color="danger">
+        Le prénom du père (Fr) est requis.
+      </ion-note>
+    
+      <ion-item>
+        <ion-label position="floating">Sexe (Fr)</ion-label>
+        <ion-input formControlName="sexeFr" type="text" readonly></ion-input>
+      </ion-item>
+      <ion-note *ngIf="fullRegisterForm.get('sexeFr')?.hasError('required') && fullRegisterForm.get('sexeFr')?.touched" color="danger">
+        Le sexe (Fr) est requis.
+      </ion-note>
+    
+      <ion-item *ngIf=false>
+        <ion-label position="floating">Numéro client</ion-label>
+        <ion-input formControlName="numCli" type="text"></ion-input>
+      </ion-item>
+      <ion-note *ngIf="fullRegisterForm.get('numCli')?.hasError('required') && fullRegisterForm.get('numCli')?.touched" color="danger">
+        Le numéro client est requis.
+      </ion-note>
+    
+      <ion-item *ngIf=false>
+        <ion-label position="floating">Numéro de compte</ion-label>
+        <ion-input formControlName="numCompte" type="text"></ion-input>
+      </ion-item>
+      <ion-note *ngIf="fullRegisterForm.get('numCompte')?.hasError('required') && fullRegisterForm.get('numCompte')?.touched" color="danger">
+        Le numéro de compte est requis.
+      </ion-note>
+    
+      <ion-item *ngIf=false>
+        <ion-label position="floating">Solde indicatif</ion-label>
+        <ion-input formControlName="soldeIndicative" type="number"></ion-input>
+      </ion-item>
+      <ion-note *ngIf="fullRegisterForm.get('soldeIndicative')?.hasError('required') && fullRegisterForm.get('soldeIndicative')?.touched" color="danger">
+        Le solde indicatif est requis.
+      </ion-note>
+    
+      <ion-item *ngIf=false>
+        <ion-label position="floating">Type de client</ion-label>
+        <ion-input formControlName="typeCli" type="text"></ion-input>
+      </ion-item>
+      <ion-note *ngIf="fullRegisterForm.get('typeCli')?.hasError('required') && fullRegisterForm.get('typeCli')?.touched" color="danger">
+        Le type de client est requis.
+      </ion-note>
+    
+      <ion-item *ngIf=false>
+        <ion-label position="floating">Langue</ion-label>
+        <ion-input formControlName="langue" type="text"></ion-input>
+      </ion-item>
+      <ion-note *ngIf="fullRegisterForm.get('langue')?.hasError('required') && fullRegisterForm.get('langue')?.touched" color="danger">
+        La langue est requise.
+      </ion-note>
+    
+      <ion-item *ngIf=false>
+        <ion-label position="floating">Date et heure de création</ion-label>
+        <ion-input formControlName="dateheurCreation" type="datetime-local"></ion-input>
+      </ion-item>
+      <ion-note *ngIf="fullRegisterForm.get('dateheurCreation')?.hasError('required') && fullRegisterForm.get('dateheurCreation')?.touched" color="danger">
+        La date et heure de création sont requises.
+      </ion-note>
+    
+      <ion-item *ngIf=false>
+        <ion-label position="floating">Date du dernier crédit</ion-label>
+        <ion-input formControlName="dateDernierCredi" type="datetime-local"></ion-input>
+      </ion-item>
+      <ion-note *ngIf="fullRegisterForm.get('dateDernierCredi')?.hasError('required') && fullRegisterForm.get('dateDernierCredi')?.touched" color="danger">
+        La date du dernier crédit est requise.
+      </ion-note>
+    
+      <ion-item *ngIf=false>
+        <ion-label position="floating">Date du dernier débit</ion-label>
+        <ion-input formControlName="dateDernierDebit" type="datetime-local"></ion-input>
+      </ion-item>
+      <ion-note *ngIf="fullRegisterForm.get('dateDernierDebit')?.hasError('required') && fullRegisterForm.get('dateDernierDebit')?.touched" color="danger">
+        La date du dernier débit est requise.
+      </ion-note>
+    
+      <ion-item *ngIf=false>
+        <ion-label position="floating">Date de la dernière connexion</ion-label>
+        <ion-input formControlName="dateDernierConnection" type="datetime-local"></ion-input>
+      </ion-item>
+      <ion-note *ngIf="fullRegisterForm.get('dateDernierConnection')?.hasError('required') && fullRegisterForm.get('dateDernierConnection')?.touched" color="danger">
+        La date de la dernière connexion est requise.
+      </ion-note>
+    
+      <ion-item *ngIf=false>
+        <ion-label position="floating">Total crédit</ion-label>
+        <ion-input formControlName="totalCredit" type="number"></ion-input>
+      </ion-item>
+      <ion-note *ngIf="fullRegisterForm.get('totalCredit')?.hasError('required') && fullRegisterForm.get('totalCredit')?.touched" color="danger">
+        Le total crédit est requis.
+      </ion-note>
+    
+      <ion-item *ngIf=false>
+        <ion-label position="floating">Total débit</ion-label>
+        <ion-input formControlName="totalDebit" type="number" ></ion-input>
+      </ion-item>
+      <ion-note *ngIf="fullRegisterForm.get('totalDebit')?.hasError('required') && fullRegisterForm.get('totalDebit')?.touched" color="danger">
+        Le total débit est requis.
+      </ion-note>
+     
+   <ion-button expand="full"  slot="start" type="button" (click)="precedent()" color="secondary">Precedent</ion-button>
+    <ion-button expand="full"  type="submit" (click)="showAdditionalFields = true" color="primary">S'enregistrer</ion-button>
+      
+  </div>
+  </form>
+</ion-content>

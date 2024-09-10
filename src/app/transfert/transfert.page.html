@@ -1,0 +1,118 @@
+
+<ion-header *ngIf="!confirmeTransfer">
+  <ion-toolbar color="primary">
+  
+    <ion-buttons slot="start">
+      <ion-back-button default-href="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Transfert d'argent</ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content *ngIf="!confirmeTransfer" style="margin-top: 20%;">
+ 
+  <ion-toolbar color="primary" >
+  
+    <ion-segment value="phone">
+      <ion-segment-button value="phone">
+        <ion-icon name="call-outline"></ion-icon>
+        <ion-label>Numéro de téléphone</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="username">
+        <ion-icon name="person-outline"></ion-icon>
+        <ion-label>Nom d'utilisateur</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="bank">
+        <ion-icon name="business-outline"></ion-icon>
+        <ion-label>Banque</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="facebook">
+        <ion-icon name="logo-facebook"></ion-icon>
+        <ion-label>Facebook</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  
+    </ion-toolbar>
+    
+      <ion-item>
+    <ion-label position="floating">Numéro de téléphone</ion-label>
+    <ion-input type="number" [(ngModel)]="numeroC" name="numeroC" required pattern="\d{8}" maxlength="8" ></ion-input>
+    <ion-button slot="end" fill="clear">
+      <ion-icon slot="icon-only" name="call-outline"></ion-icon>
+    </ion-button>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">Montant</ion-label>
+    <ion-input type="number"  [(ngModel)]="montantTxt" name="montantTxt" required pattern="\d{10}" maxlength="10" ></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">Remarque (Optionnelle)</ion-label>
+    <ion-input type="text"  [(ngModel)]="motif" name="motif" ></ion-input>
+  </ion-item>
+
+  <ion-footer>
+    <ion-toolbar>
+      <ion-button expand="full" (click)="goToConfirmeTransfert()" color="secondary"  >Envoyer</ion-button>
+    </ion-toolbar>
+  </ion-footer>
+   
+</ion-content>
+
+
+
+
+
+<ion-header *ngIf="confirmeTransfer">
+  <ion-toolbar>
+    
+    <ion-title>Confirmer le transfert</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="confirmeTransfer">
+  <ion-card>
+  <ion-card-header style="margin-top: 20px;">
+    <ion-label><h4>Vérifier les détails entrés</h4></ion-label>
+  </ion-card-header>
+  <ion-card-content>
+  <ion-item>
+    <ion-label position="stacked">Numéro de téléphone</ion-label>
+    <ion-text>{{numeroC}}</ion-text>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">Montant</ion-label>
+    <ion-text>{{montantTxt}} MRU</ion-text>
+  </ion-item>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Répartition des frais</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label>Frais de service</ion-label>
+        <ion-note slot="end">0 MRU</ion-note>
+      </ion-item>
+      <ion-item>
+        <ion-label>Commission</ion-label>
+        <ion-note slot="end">{{montantCom}} MRU</ion-note>
+      </ion-item>
+      <ion-item>
+        <ion-label>Taxe</ion-label>
+        <ion-note slot="end">0 MRU</ion-note>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+</ion-card-content>
+</ion-card>
+  <ion-footer>
+    <ion-toolbar>
+      <ion-button expand="full" color="secondary" (click)="backToConfirmeTransfert()">Retour</ion-button>
+      <ion-button expand="full" color="primary">Continuer</ion-button>
+    </ion-toolbar>
+  </ion-footer>
+</ion-content>
